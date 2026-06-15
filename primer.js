@@ -132,13 +132,18 @@
 
 
 
-    function logger(namespace) {
-      return function(...args) {//znaci ove 3 tackice pretvaraju args u niz bez .slice.call
-        console.log.apply(console, [namespace].concat(args))
-      }
-    }
+    // function logger(namespace) {
+    //   return function(...args) {//znaci ove 3 tackice pretvaraju args u niz bez .slice.call
+    //     console.log.apply(console, [namespace].concat(args))
+    //   }
+    // }
 
-    module.exports = logger
+    // module.exports = logger
+
+ module.exports = function(namespace) {
+      // SOLUTION GOES HERE
+      return console.log.bind(console,namespace)
+    }
 
 
 
