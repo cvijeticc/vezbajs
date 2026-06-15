@@ -117,18 +117,30 @@
 
 //     module.exports = reduce
 
-function duckCount() {
-      // SOLUTION GOES HERE
-      let args = Array.prototype.slice.call(arguments);
-      //sada je args zapravo arguments ali kao niz
-      let ducks = args.filter(function(obj) {
-    return Object.prototype.hasOwnProperty.call(obj, 'quack');
-    });
-        return ducks.length;
+// function duckCount() {
+//       // SOLUTION GOES HERE
+//       let args = Array.prototype.slice.call(arguments);
+//       //sada je args zapravo arguments ali kao niz
+//       let ducks = args.filter(function(obj) {
+//     return Object.prototype.hasOwnProperty.call(obj, 'quack');
+//     });
+//         return ducks.length;
       
+//     }
+
+//     module.exports = duckCount
+
+
+
+    function logger(namespace) {
+      return function(...args) {//znaci ove 3 tackice pretvaraju args u niz bez .slice.call
+        console.log.apply(console, [namespace].concat(args))
+      }
     }
 
-    module.exports = duckCount
+    module.exports = logger
+
+
 
 
 
