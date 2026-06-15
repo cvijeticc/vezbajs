@@ -84,27 +84,39 @@
 
 //     module.exports = reduce
 
-function reduce(arr, fn, initial) {
-  // Pravimo pomoćnu rekurzivnu funkciju koja prati trenutni indeks
-  function reduceOne(index, value) {
-    // 1. BAZNI SLUČAJ (Kraj rekurzije): 
-    // Ako smo prošli sve elemente u nizu, vrati finalnu vrednost
-    if (index === arr.length) {
-      return value;
+// function reduce(arr, fn, initial) {
+//   // Pravimo pomoćnu rekurzivnu funkciju koja prati trenutni indeks
+//   function reduceOne(index, value) {
+//     // 1. BAZNI SLUČAJ (Kraj rekurzije): 
+//     // Ako smo prošli sve elemente u nizu, vrati finalnu vrednost
+//     if (index === arr.length) {
+//       return value;
+//     }
+
+//     // 2. REKURZIVNI KORAK:
+//     // Prvo izračunamo novu akumuliranu vrednost pozivanjem prosleđene funkcije 'fn'
+//     // 'fn' po specifikaciji prima: (prethodnaVrednost, trenutnaVrednost, indeks, ceoNiz)
+//     var newValue = fn(value, arr[index], index, arr);
+
+//     // Zatim pozivamo ponovo istu ovu funkciju za sledeći indeks (index + 1)
+//     return reduceOne(index + 1, newValue);
+//   }
+
+//   // Pokrećemo rekurziju od indeksa 0 i sa početnom vrednošću (initial)
+//   return reduceOne(0, initial);
+// }
+
+// module.exports = reduce;
+
+ function reduce(arr, fn, initial) {
+      return (function reduceOne(index, value) {
+        if (index > arr.length - 1) return value // end condition
+        return reduceOne(index + 1, fn(value, arr[index], index, arr)) // calculate & pass values to next step
+      })(0, initial) // IIFE. kick off recursion with initial values
     }
 
-    // 2. REKURZIVNI KORAK:
-    // Prvo izračunamo novu akumuliranu vrednost pozivanjem prosleđene funkcije 'fn'
-    // 'fn' po specifikaciji prima: (prethodnaVrednost, trenutnaVrednost, indeks, ceoNiz)
-    var newValue = fn(value, arr[index], index, arr);
+    module.exports = reduce
 
-    // Zatim pozivamo ponovo istu ovu funkciju za sledeći indeks (index + 1)
-    return reduceOne(index + 1, newValue);
-  }
 
-  // Pokrećemo rekurziju od indeksa 0 i sa početnom vrednošću (initial)
-  return reduceOne(0, initial);
-}
 
-module.exports = reduce;
 
