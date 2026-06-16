@@ -140,10 +140,23 @@
 
     // module.exports = logger
 
- module.exports = function(namespace) {
-      // SOLUTION GOES HERE
-      return console.log.bind(console,namespace)
+//  module.exports = function(namespace) {
+//       // SOLUTION GOES HERE
+//       return console.log.bind(console,namespace)
+//     }
+
+module.exports = function arrayMap(arr, fn, thisArg) {
+
+      return arr.reduce(function(acc, item, index, arr) {
+
+        acc.push(fn.call(thisArg, item, index, arr))
+
+        return acc
+
+      }, [])
+
     }
+
 
 
 
