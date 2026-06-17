@@ -157,32 +157,46 @@
 
 //     }
 
- function Spy(target, method) {
-      var originalFunction = target[method]
+//  function Spy(target, method) {
+//       var originalFunction = target[method]
 
-      // use an object so we can pass by reference, not value
-      // i.e. we can return result, but update count from this scope
-      var result = {
-        count: 0
+//       // use an object so we can pass by reference, not value
+//       // i.e. we can return result, but update count from this scope
+//       var result = { // ovde nismo napisali samo var count jer je samo count vredonosno
+//         count: 0  // a nama treba referentno a obj je referentan
+//       }
+
+//       // replace method with spy method
+//       target[method] = function() { //sada kada se napise console.log onda ce da se pokrene ova fja
+//         result.count++ // track function was called
+//         return originalFunction.apply(this, arguments) // invoke original function
+//       }
+
+//       return result
+//     }
+
+//     module.exports = Spy
+
+  //  var spy = Spy(console, 'error')
+  //   console.error('calling console.error')
+  //   console.error('calling console.error')
+  //   console.error('calling console.error')
+  //   console.log(spy.count) // 3
+
+function repeat(operation, num) {
+      // modify this so it can be interrupted
+      if (num <= 0) return
+      operation()
+      if (num%10 == 0) {
+        setTimeout(function(){
+          repeat(operation, --num)
+        });
+      }else{
+      return repeat(operation, --num)
       }
-
-      // replace method with spy method
-      target[method] = function() {
-        result.count++ // track function was called
-        return originalFunction.apply(this, arguments) // invoke original function
-      }
-
-      return result
     }
 
-    module.exports = Spy
-
-
-
-
-
-
-
+    module.exports = repeat
 
 
 
