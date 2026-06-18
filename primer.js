@@ -183,20 +183,90 @@
   //   console.error('calling console.error')
   //   console.log(spy.count) // 3
 
-function repeat(operation, num) {
-      // modify this so it can be interrupted
-      if (num <= 0) return
-      operation()
-      if (num%10 == 0) {
-        setTimeout(function(){
-          repeat(operation, --num)
-        });
-      }else{
-      return repeat(operation, --num)
-      }
-    }
+// function repeat(operation, num) {
+//       // modify this so it can be interrupted
+//       if (num <= 0) return
+//       operation()
+//       if (num%10 == 0) {
+//         setTimeout(function(){
+//           repeat(operation, --num)
+//         });
+//       }else{
+//       return repeat(operation, --num)
+//       }
+//     }
 
-    module.exports = repeat
+//     module.exports = repeat
 
+///////////////////////
+
+//Trampoline
+
+//  function repeat(operation, num) {
+//       return function() {
+//         if (num <= 0) return
+//         operation()
+//         return repeat(operation, --num)
+//       }
+//     }
+
+//     function trampoline(fn) {
+//       while(fn && typeof fn === 'function') {
+//         fn = fn()
+//       }
+//     }
+
+//     module.exports = function(operation, num) {
+//       trampoline(function() {
+//         return repeat(operation, num)
+//       })
+//     }
+
+// Async Loops
+
+//  function loadUsers(userIds, load, done) {
+//       var completed = 0
+//       var users = []
+//       userIds.forEach(function(id, index) {
+//         load(id, function(user) {
+//           users[index] = user
+//           if (++completed === userIds.length) return done(users)
+//         })
+//       })
+//     }
+
+//     module.exports = loadUsers
+
+// Recursion
+
+//  function getDependencies(mod, result) {
+//       result = result || []
+//       var dependencies = mod && mod.dependencies || []
+//       Object.keys(dependencies).forEach(function(dep) {
+//         var key = dep + '@' + mod.dependencies[dep].version
+//         if (result.indexOf(key) === -1) result.push(key)
+//         getDependencies(mod.dependencies[dep], result)
+//       })
+//       return result.sort()
+//     }
+
+//     module.exports = getDependencies
+
+// Currying
+
+// function curryN(fn, n) {
+//       n = n || fn.length
+//       return function curriedN(arg) {
+//         if (n <= 1) return fn(arg)
+//         return curryN(fn.bind(this, arg), n - 1)
+//       }
+//     }
+
+//     module.exports = curryN
+
+//Function Call
+// module.exports = Function.prototype.call.bind(Array.prototype.slice); ovo je gemini
+
+module.exports = Function.call.bind(Array.prototype.slice)
 
 
